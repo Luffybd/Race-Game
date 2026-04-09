@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define TRACK_LENGTH 20
+
+void print_track(int player_pos, int opponent_pos) {
+    printf("\n");
+    for (int i = 0; i < TRACK_LENGTH; i++) {
+        if (i == player_pos) {
+            printf("[P]"); // Your car
+        } else if (i == opponent_pos) {
+            printf("[O]"); // Opponent car
+        } else {
+            printf("[ ]"); // Track
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    srand(time(NULL));
+    int player_pos = 0;
+    int opponent_pos = 0;
+    int move;
+
+    printf("Welcome to the Text-based Car Racing Game!\n");
+    printf("Your car: [P] | Opponent car: [O]\n");
+
+    while (1) {
+        print_track(player_pos, opponent_pos);
+
+        // Player move
+        printf("Enter a move speed (1-3): ");
+        if (scanf("%d", &move) != 1 || move < 1 || move > 3) {
+            printf("Invalid move! Try again.\n");
+            while(getchar() != '\n'); // Clear buffer
+            continue;
+        }
+        player_pos += move;
+
+        // Opponent move (random)
+        opponent_pos += rand() % 3 + 1;
+
+        // Check for winner
+        if (player_pos >= TRACK_LENGTH) {
+            print_track(player_pos, opponent_pos);
+            printf("You win!\n");
+            break;
+        } else if (opponent_pos >= TRACK_LENGTH) {
+            print_track(player_pos, opponent_pos);
+            printf("Opponent wins! Better luck next time.\n");
+            break;
+        }
+    }
+    return 0;
+}
