@@ -1,0 +1,62 @@
+using System;
+using System.Threading;
+
+class RacingGame
+{
+    static int width = 20;
+    static int height = 20;
+    static int carPos = 10;
+    static int score = 0;
+    static Random rand = new Random();
+    static int obstacleX = 10;
+    static int obstacleY = 0;
+
+    static void Main()
+    {
+        Console.CursorVisible = false;
+        while (true)
+        {
+            if (Console.KeyAvailable)
+            {
+                var key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.LeftArrow && carPos > 1) carPos--;
+                if (key == ConsoleKey.RightArrow && carPos < width - 2) carPos++;
+            }
+
+            Update();
+            Draw();
+            if (obstacleY == height - 1 && Math.Abs(obstacleX - carPos) < 2) break;
+            Thread.Sleep(50);
+        }
+        Console.Clear();
+        Console.WriteLine($"Game Over! Score: {score}");
+    }
+
+    static void Update()
+    {
+        obstacleY++;
+        if (obstacleY >= height)
+        {
+            obstacleY = 0;
+            obstacleX = rand.Next(1, width - 1);
+            score++;
+        }
+    }
+
+    static void Draw()
+    {
+        Console.SetCursorPosition(0, 0);
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (x == 0 || x == width - 1) Console.Write("|");
+                else if (y == height - 1 && x == carPos) Console.Write("A");
+                else if (y == obstacleY && x == obstacleX) Console.Write("X");
+                else Console.Write(" ");
+            }
+            Console.WriteLine();
+        }
+        Console.WriteLine($"Score: {score}");
+    }
+}
