@@ -1,0 +1,89 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+class Student {
+private:
+    int id;
+    string name;
+    float gpa;
+
+public:
+    Student(int i, string n, float g) : id(i), name(n), gpa(g) {}
+
+    void display() const {
+        cout << "ID: " << id << " | Name: " << name << " | GPA: " << gpa << endl;
+    }
+
+    int getId() const { return id; }
+    string getName() const { return name; }
+};
+
+class ManagementSystem {
+private:
+    vector<Student> students;
+
+public:
+    void addStudent() {
+        int id;
+        string name;
+        float gpa;
+        cout << "Enter ID: ";
+        cin >> id;
+        cin.ignore();
+        cout << "Enter Name: ";
+        getline(cin, name);
+        cout << "Enter GPA: ";
+        cin >> gpa;
+        students.emplace_back(id, name, gpa);
+        cout << "Record added successfully.\n";
+    }
+
+    void showAll() const {
+        if (students.empty()) {
+            cout << "No records found.\n";
+            return;
+        }
+        for (const auto& s : students) {
+            s.display();
+        }
+    }
+
+    void findStudent() const {
+        int id;
+        cout << "Enter ID to search: ";
+        cin >> id;
+        auto it = find_if(students.begin(), students.end(), [id](const Student& s) {
+            return s.getId() == id;
+        });
+
+        if (it != students.end()) {
+            it->display();
+        } else {
+            cout << "Student not found.\n";
+        }
+    }
+};
+
+int main() {
+    ManagementSystem sms;
+    int choice;
+
+    while (true) {
+        cout << "\n1. Add Student\n2. View All\n3. Search\n4. Exit\nChoice: ";
+        cin >> choice;
+
+        if (choice == 4) break;
+
+        switch (choice) {
+            case 1: sms.addStudent(); break;
+            case 2: sms.showAll(); break;
+            case 3: sms.findStudent(); break;
+            default: cout << "Invalid option.\n";
+        }
+    }
+    return 0;
+}
