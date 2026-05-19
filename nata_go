@@ -3,7 +3,7 @@
 <head>
     <title>Race Game</title>
     <style>
-        body { margin: 0; overflow: hidden; background: #333; }
+        body { margin: 0; overflow: hidden; background: #3333; }
         canvas { display: block; background: #555; margin: auto; border: 5px solid #fff; }
     </style>
 </head>
