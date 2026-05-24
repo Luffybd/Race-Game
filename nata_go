@@ -37,7 +37,7 @@ function update() {
     if (keys["ArrowRight"] && car.x < canvas.width - car.w) car.x += car.speed;
 
     obstacles.forEach((obs, index) => {
-        obs.y += 4;
+        obs.y += 5;
         if (obs.y > canvas.height) {
             obstacles.splice(index, 1);
             score++;
