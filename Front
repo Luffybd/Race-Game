@@ -14,3 +14,5 @@ while guess != target:
             print("Correct!")
     except ValueError:
         print("Enter a number")
+
+return 0;
